@@ -3,10 +3,6 @@ package analysis;
 import data.CardDesc;
 import data.DeckDesc;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * Created by youngj14 on 12/13/2018.
  */
@@ -60,14 +56,30 @@ public class CardPairingData<T extends CardDesc> {
 
     public void outputBasicAnalysis() {
         float c1_w_c2, c2_w_c1;
+        float s_c1_w_c2, s_c2_w_c1;
+        float a_s_c1_w_c2, a_s_c2_w_c1;
+        float s;
 
         c1_w_c2 = usage / validWithC2;
         c2_w_c1 = usage / validWithC1;
+
+        s_c1_w_c2 = c1_w_c2 / d1.getUsageProportion();
+        s_c2_w_c1 = c2_w_c1 / d2.getUsageProportion();
+
+        a_s_c1_w_c2 = s_c1_w_c2 - 1;
+        a_s_c2_w_c1 = s_c2_w_c1 - 1;
+
+        s = (a_s_c1_w_c2 * validWithC2 + a_s_c2_w_c1 * validWithC1) / (validWithC1 + validWithC2 - validDecks);
 
         System.out.println("Used together in: " + getUsageProportion());
         System.out.println("Card 1 used in: " + d1.getUsageProportion());
         System.out.println("Card 2 used in: " + d2.getUsageProportion());
         System.out.println("Card 1 used in w/Card 2: " + c1_w_c2);
         System.out.println("Card 1 used in w/Card 2: " + c2_w_c1);
+        System.out.println("Card 1 synergy w/Card 2: " + s_c1_w_c2);
+        System.out.println("Card 2 synergy w/Card 1: " + s_c2_w_c1);
+        System.out.println("Card 1 adjusted synergy w/Card 2: " + a_s_c1_w_c2);
+        System.out.println("Card 2 adjusted synergy w/Card 1: " + a_s_c2_w_c1);
+        System.out.println("Magical synergy number: " + s);
     }
 }
