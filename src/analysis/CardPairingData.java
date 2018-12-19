@@ -2,6 +2,7 @@ package analysis;
 
 import data.CardDesc;
 import data.DeckDesc;
+import org.apache.commons.math3.distribution.NormalDistribution;
 
 /**
  * Created by youngj14 on 12/13/2018.
@@ -59,6 +60,9 @@ public class CardPairingData<T extends CardDesc> {
         float s_c1_w_c2, s_c2_w_c1;
         float a_s_c1_w_c2, a_s_c2_w_c1;
         float s;
+        float z, se, p;
+        float p_c1, p_c2;
+        NormalDistribution distr = new NormalDistribution(0, 1);
 
         c1_w_c2 = usage / validWithC2;
         c2_w_c1 = usage / validWithC1;
@@ -71,6 +75,16 @@ public class CardPairingData<T extends CardDesc> {
 
         s = (a_s_c1_w_c2 * validWithC2 + a_s_c2_w_c1 * validWithC1) / (validWithC1 + validWithC2 - validDecks);
 
+        p = 2 * usage / (validDecks + validWithC2);
+        se = (float) Math.sqrt((double) (p * (1 - p) * (1 / validDecks + 1 / validWithC2)));
+        z = -Math.abs((c1_w_c2 - getUsageProportion()) / se);
+        p_c1 = (float) distr.cumulativeProbability(z);
+
+        p = 2 * usage / (validDecks + validWithC1);
+        se = (float) Math.sqrt((double) (p * (1 - p) * (1 / validDecks + 1 / validWithC1)));
+        z = -Math.abs((c2_w_c1 - getUsageProportion()) / se);
+        p_c2 = (float) distr.cumulativeProbability(z);
+
         System.out.println("Used together in: " + getUsageProportion());
         System.out.println("Card 1 used in: " + d1.getUsageProportion());
         System.out.println("Card 2 used in: " + d2.getUsageProportion());
@@ -81,5 +95,7 @@ public class CardPairingData<T extends CardDesc> {
         System.out.println("Card 1 adjusted synergy w/Card 2: " + a_s_c1_w_c2);
         System.out.println("Card 2 adjusted synergy w/Card 1: " + a_s_c2_w_c1);
         System.out.println("Magical synergy number: " + s);
+        System.out.println("Card 1 p-value: " + p_c1);
+        System.out.println("Card 2 p-value: " + p_c2);
     }
 }
