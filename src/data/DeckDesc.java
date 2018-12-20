@@ -8,18 +8,24 @@ import java.util.Map;
  * Created by youngj14 on 12/11/2018.
  */
 public abstract class DeckDesc<T extends CardDesc> {
-    private Map<T, Integer> cards;
-    private int size;
-    private DeckDesc<T> sideDeck;
-    private DeckRestrictions<T> restrictions;
+    protected String name;
+    protected Map<T, Integer> cards;
+    protected int size;
+    protected DeckDesc<T> sideDeck;
+    protected DeckRestrictions<T> restrictions;
 
     // TODO: Work with side deck in some way.
 
-    public DeckDesc(DeckRestrictions<T> restrict) {
+    public DeckDesc(DeckRestrictions<T> restrict, String name) {
+        this.name = name;
         cards = new HashMap<>();
         size = 0;
         restrictions = restrict;
         sideDeck = null;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getSize() {

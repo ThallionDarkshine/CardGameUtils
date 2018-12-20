@@ -36,6 +36,10 @@ public class CardData<T extends CardDesc> {
         }
     }
 
+    public int getUsage() {
+        return usage;
+    }
+
     public float getUsageProportion() {
         return usage / (float) validDecks;
     }
