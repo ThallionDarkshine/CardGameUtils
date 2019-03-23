@@ -1,4 +1,4 @@
-package analysis;
+package analysis.byDeck;
 
 import data.CardDesc;
 import data.DeckDesc;
@@ -9,14 +9,14 @@ import java.util.List;
 /**
  * Created by youngj14 on 12/13/2018.
  */
-public class CardData<T extends CardDesc> {
+public class CardDataByDeck<T extends CardDesc> {
     private T card;
     private int usage;
     private float adjustedUsage;
     private int validDecks;
     private List<Integer> copies;
 
-    public CardData(T card) {
+    public CardDataByDeck(T card) {
         this.card = card;
         usage = 0;
         adjustedUsage = 0f;

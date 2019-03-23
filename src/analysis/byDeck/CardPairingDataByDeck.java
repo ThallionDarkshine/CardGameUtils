@@ -1,4 +1,4 @@
-package analysis;
+package analysis.byDeck;
 
 import data.CardDesc;
 import data.DeckDesc;
@@ -7,23 +7,23 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 /**
  * Created by youngj14 on 12/13/2018.
  */
-public class CardPairingData<T extends CardDesc> {
+public class CardPairingDataByDeck<T extends CardDesc> {
     private T c1, c2;
-    private CardData<T> d1, d2;
+    private CardDataByDeck<T> d1, d2;
     private int validDecks;
     private int validWithC1, validWithC2;
     private int usage;
     private float adjustedUsage;
 
-    public CardPairingData(T c1, T c2) {
+    public CardPairingDataByDeck(T c1, T c2) {
         this.c1 = c1;
         this.c2 = c2;
         validDecks = 0;
         validWithC1 = validWithC2 = 0;
         usage = 0;
         adjustedUsage = 0f;
-        d1 = new CardData<>(c1);
-        d2 = new CardData<>(c2);
+        d1 = new CardDataByDeck<>(c1);
+        d2 = new CardDataByDeck<>(c2);
     }
 
     public void addDeckData(DeckDesc<T> deck) {

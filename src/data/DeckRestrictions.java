@@ -13,10 +13,12 @@ public abstract class DeckRestrictions<T extends CardDesc> {
     public abstract boolean hasSideDeck();
 
     public boolean canAdd(DeckDesc<T> deck, T card, int count) {
+        if (card == null) return false;
+
         if (!isValid(card, deck)) return false;
-        if (cardLimit(card) < count) return false;
-        if (deck.getSize() > maxSize() - count) return false;
-        if (deck.getCount(card) > cardLimit(card) - count) return false;
+        if (cardLimit(card) >= 0 && cardLimit(card) < count) return false;
+        if (maxSize() >= 0 && deck.getSize() > maxSize() - count) return false;
+        if (cardLimit(card) >= 0 && deck.getCount(card) > cardLimit(card) - count) return false;
 
         return true;
     }

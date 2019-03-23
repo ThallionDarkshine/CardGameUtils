@@ -11,10 +11,8 @@ public abstract class DeckDesc<T extends CardDesc> {
     protected String name;
     protected Map<T, Integer> cards;
     protected int size;
-    protected DeckDesc<T> sideDeck;
+    protected DeckDesc<T> sideDeck; // TODO: Work with side deck in some way.
     protected DeckRestrictions<T> restrictions;
-
-    // TODO: Work with side deck in some way.
 
     public DeckDesc(DeckRestrictions<T> restrict, String name) {
         this.name = name;

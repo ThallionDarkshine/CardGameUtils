@@ -1,4 +1,4 @@
-package analysis;
+package analysis.byDeck;
 
 import data.CardDesc;
 import data.DeckDesc;
@@ -11,12 +11,14 @@ import java.util.Map;
 /**
  * Created by ThallionDarkshine on 12/19/2018.
  */
-public class CardSynergyAnalysis {
+public class CardSynergyAnalysisByDeck {
     public static <T extends CardDesc> void analyzeCardSynergy(List<DeckDesc<T>> decks) {
-        Map<T, Map<T, CardPairingData>> pairings = new HashMap<>();
+        Map<T, Map<T, CardPairingDataByDeck>> pairings = new HashMap<>();
 
         for (int i = 0;i < decks.size();++i) {
-            List<T> cards = new ArrayList<T>(decks.get(i).getCards().keySet());
+            if ((i + 1) % 100 == 0) System.out.println(i + " / " + decks.size());
+
+            List<T> cards = new ArrayList<>(decks.get(i).getCards().keySet());
 
             for (int j = 0;j < cards.size() - 1;++j) {
                 for (int k = j + 1;k < cards.size();++k) {
@@ -34,7 +36,7 @@ public class CardSynergyAnalysis {
                     }
 
                     if (!pairings.get(c1).containsKey(c2)) {
-                        CardPairingData pairing = new CardPairingData<>(c1, c2);
+                        CardPairingDataByDeck pairing = new CardPairingDataByDeck<>(c1, c2);
 
                         for (int l = 0;l < i;++l) {
                             pairing.addDeckData(decks.get(l));
@@ -48,10 +50,8 @@ public class CardSynergyAnalysis {
             }
         }
 
-        for (Map<T, CardPairingData> m : pairings.values()) {
-            for (CardPairingData pairing : m.values()) {
-                pairing.outputBasicAnalysis();
-            }
+        for (Map<T, CardPairingDataByDeck> m : pairings.values()) {
+            m.values().forEach(CardPairingDataByDeck::outputBasicAnalysis);
         }
     }
 }
